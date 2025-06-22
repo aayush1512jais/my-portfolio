@@ -47,6 +47,12 @@ class AnimatedBackground {
   }
   
   createCanvas() {
+    // Fix: robustly select the animated background container
+    const bgContainer = document.getElementById('animatedBg');
+    if (!bgContainer) {
+      console.warn('Animated background container not found');
+      return;
+    }
     this.canvas = document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
     this.canvas.style.position = 'fixed';
@@ -56,8 +62,12 @@ class AnimatedBackground {
     this.canvas.style.height = '100%';
     this.canvas.style.pointerEvents = 'none';
     this.canvas.style.zIndex = '-1';
-    
-    document.getElementById('animatedBg').appendChild(this.canvas);
+
+    // Set canvas width/height attributes for correct rendering
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+
+    bgContainer.appendChild(this.canvas);
     this.resize();
   }
   
@@ -85,6 +95,7 @@ class AnimatedBackground {
   }
   
   resize() {
+    if (!this.canvas) return;
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
   }
