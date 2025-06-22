@@ -35,22 +35,20 @@ class AnimatedBackground {
     this.ctx = null;
     this.particles = [];
     this.mouse = { x: 0, y: 0 };
-    
+    this.initialized = false;
+
     this.init();
   }
-  
+
   init() {
-    this.createCanvas();
-    this.createParticles();
-    this.bindEvents();
-    this.animate();
-  }
-  
-  createCanvas() {
-    // Fix: robustly select the animated background container
+    // Try to get the container, if not found, retry after DOMContentLoaded
     const bgContainer = document.getElementById('animatedBg');
     if (!bgContainer) {
-      console.warn('Animated background container not found');
+      // If not found, try again after DOMContentLoaded
+      if (!this.initialized) {
+        document.addEventListener('DOMContentLoaded', () => this.init(), { once: true });
+        this.initialized = true;
+      }
       return;
     }
     this.canvas = document.createElement('canvas');
@@ -68,7 +66,9 @@ class AnimatedBackground {
     this.canvas.height = window.innerHeight;
 
     bgContainer.appendChild(this.canvas);
-    this.resize();
+    this.createParticles();
+    this.bindEvents();
+    this.animate();
   }
   
   createParticles() {
