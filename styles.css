@@ -1082,7 +1082,11 @@ body.loaded .navbar {
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-body.loaded .hero,
+body.loaded .hero {
+  opacity: 1 !important;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 body.loaded section {
   opacity: 1 !important;
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
