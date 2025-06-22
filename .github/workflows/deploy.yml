@@ -15,27 +15,33 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      - name: Update npm 🚀
+        run: npm install -g npm@10
+
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build with correct base path
-        run: npm run deploy
+        run: npm run build
 
       - name: List dist contents
         run: ls -l ./dist
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
+        #   github_token: ${{ secrets.GITHUB_TOKEN }}
+        #   publish_dir: ./dist
+        #   publish_branch: gh-pages
+          folder: dist
     #   - name: Deploy to GitHub Pages
     #     id: deployment
     #     uses: actions/deploy-pages@v4

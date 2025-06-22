@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "prepare-deploy": "node deploy.js",
     "predeploy": "npm run lint && npm run build",
-    "deploy": "vite build --base=/my-portfolio-2/ && gh-pages -b gh-pages -d dist",
+    "deploy": "gh-pages -b gh-pages -d dist",
     "build:deploy": "npm run prepare-deploy && npm run deploy"
   },
   "dependencies": {
