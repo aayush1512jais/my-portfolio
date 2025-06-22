@@ -11,9 +11,11 @@ class SplashScreenManager {
   
   init() {
     // Ensure splash screen is visible initially
-    this.splashScreen.style.display = 'flex';
-    this.splashScreen.style.opacity = '1';
-    this.splashScreen.style.visibility = 'visible';
+    if (this.splashScreen) {
+      this.splashScreen.style.display = 'flex';
+      this.splashScreen.style.opacity = '1';
+      this.splashScreen.style.visibility = 'visible';
+    }
     
     // Hide main content initially
     if (this.navbar) {
@@ -39,15 +41,21 @@ class SplashScreenManager {
   
   animateSplashToNavbar() {
     // Add moving class to trigger logo movement animation
-    this.splashScreen.classList.add('moving');
+    if (this.splashScreen) {
+      this.splashScreen.classList.add('moving');
+    }
     
     // After logo animation completes (1 second), hide splash and show content
     setTimeout(() => {
-      this.splashScreen.style.opacity = '0';
-      setTimeout(() => {
-        this.splashScreen.style.display = 'none';
+      if (this.splashScreen) {
+        this.splashScreen.style.opacity = '0';
+        setTimeout(() => {
+          this.splashScreen.style.display = 'none';
+          this.showContent();
+        }, 500);
+      } else {
         this.showContent();
-      }, 500);
+      }
     }, 1000);
   }
   
