@@ -2,22 +2,22 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import pkg from "./package.json" assert { type: "json" };
 
-// Read package.json to get homepage field
+// Get base path from homepage in package.json
 const getBasePath = () => {
-  try {
-    const pkg = require('./package.json');
-    if (pkg.homepage) {
+  if (pkg.homepage) {
+    try {
       const url = new URL(pkg.homepage);
       let pathname = url.pathname;
-      // Ensure trailing slash for Vite base
       if (!pathname.endsWith('/')) pathname += '/';
       return pathname;
+    } catch {
+      // fallback
+      return "/";
     }
-  } catch (error) {
-    console.warn('Could not read homepage from package.json');
   }
-  return '/';
+  return "/";
 };
 
 // https://vitejs.dev/config/
