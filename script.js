@@ -1,4 +1,3 @@
-
 // Theme Management
 class ThemeManager {
   constructor() {
