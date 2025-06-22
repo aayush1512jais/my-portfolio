@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 /**
  * Deployment script for custom domains
@@ -12,7 +12,7 @@ const path = require('path');
  */
 
 function updatePackageJson() {
-  const packagePath = path.join(__dirname, 'package.json');
+  const packagePath = path.join(process.cwd(), 'package.json');
   
   try {
     const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
