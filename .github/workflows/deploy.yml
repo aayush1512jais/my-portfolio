@@ -35,6 +35,9 @@ jobs:
       - name: Copy scripts.js to dist
         run: cp script.js dist/script.js
 
+      - name: Copy resume to dist
+        run: cp -r ./resume dist/resume
+
       - name: List dist contents
         run: ls -l ./dist
 

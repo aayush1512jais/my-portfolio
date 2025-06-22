@@ -459,7 +459,7 @@ body.light .stat-item {
 /* Skills Section */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
 
@@ -751,7 +751,7 @@ body.light .timeline-content {
   border: 1px solid var(--border-dark);
   border-radius: var(--border-radius);
   transition: var(--transition);
-  min-width: 250px;
+  min-width: 400px;
   justify-content: flex-start;
   backdrop-filter: blur(10px);
 }
@@ -1090,4 +1090,15 @@ body.loaded .hero {
 body.loaded section {
   opacity: 1 !important;
   transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.site-logo {
+  height: 32px;
+  width: 32px;
+  vertical-align: middle;
+  margin-right: 8px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(14,165,233,0.12);
+  background: white;
+  object-fit: contain;
 }
