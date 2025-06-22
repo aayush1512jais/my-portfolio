@@ -1,4 +1,3 @@
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -10,7 +9,10 @@ const getBasePath = () => {
     const pkg = require('./package.json');
     if (pkg.homepage) {
       const url = new URL(pkg.homepage);
-      return url.pathname;
+      let pathname = url.pathname;
+      // Ensure trailing slash for Vite base
+      if (!pathname.endsWith('/')) pathname += '/';
+      return pathname;
     }
   } catch (error) {
     console.warn('Could not read homepage from package.json');
