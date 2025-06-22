@@ -41,9 +41,8 @@
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   
   /* New Animation Variables */
-  --glow-animation: glow 2s ease-in-out infinite alternate;
+  --glow-animation: glow 2s ease-in-out infinite;
   --pulse-animation: pulse 3s ease-in-out infinite;
-}
 
 /* Base Styles */
 * {
@@ -399,7 +398,6 @@ body.light .navbar {
 section {
   padding: var(--section-padding);
   position: relative;
-  opacity: 0;
 }
 
 /* About Section */
@@ -1076,4 +1074,17 @@ body.light .footer {
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
+}
+}
+
+/* Show navbar and hero when body has .loaded */
+body.loaded .navbar {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body.loaded .hero,
+body.loaded section {
+  opacity: 1;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
