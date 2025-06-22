@@ -270,7 +270,7 @@ body.light .navbar {
   background: var(--gradient-hero);
   position: relative;
   overflow: hidden;
-  opacity: 0;
+  opacity: 1;
 }
 
 .hero::before {
