@@ -10,7 +10,9 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare-deploy": "node deploy.js",
-    "build:deploy": "npm run prepare-deploy && npm run build"
+    "predeploy": "npm run lint && npm run build",
+    "deploy": "gh-pages -b main -d dist",
+    "build:deploy": "npm run prepare-deploy && npm run deploy"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -47,6 +49,7 @@
     "cmdk": "^1.0.0",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
+    "gh-pages": "^6.3.0",
     "input-otp": "^1.2.4",
     "lucide-react": "^0.462.0",
     "next-themes": "^0.3.0",
