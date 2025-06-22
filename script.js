@@ -36,21 +36,25 @@ class AnimatedBackground {
     this.particles = [];
     this.mouse = { x: 0, y: 0 };
     this.initialized = false;
+    this.bgContainer = null;
+    this._waitForContainer();
+  }
 
-    this.init();
+  _waitForContainer() {
+    // Try to get the container, if not found, retry until found
+    const tryInit = () => {
+      this.bgContainer = document.getElementById('animatedBg');
+      if (this.bgContainer) {
+        this.init();
+      } else {
+        setTimeout(tryInit, 50);
+      }
+    };
+    tryInit();
   }
 
   init() {
-    // Try to get the container, if not found, retry after DOMContentLoaded
-    const bgContainer = document.getElementById('animatedBg');
-    if (!bgContainer) {
-      // If not found, try again after DOMContentLoaded
-      if (!this.initialized) {
-        document.addEventListener('DOMContentLoaded', () => this.init(), { once: true });
-        this.initialized = true;
-      }
-      return;
-    }
+    if (!this.bgContainer) return;
     this.canvas = document.createElement('canvas');
     this.ctx = this.canvas.getContext('2d');
     this.canvas.style.position = 'fixed';
@@ -61,19 +65,18 @@ class AnimatedBackground {
     this.canvas.style.pointerEvents = 'none';
     this.canvas.style.zIndex = '-1';
 
-    // Set canvas width/height attributes for correct rendering
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
 
-    bgContainer.appendChild(this.canvas);
+    this.bgContainer.appendChild(this.canvas);
     this.createParticles();
     this.bindEvents();
     this.animate();
   }
-  
+
   createParticles() {
+    this.particles = [];
     const particleCount = window.innerWidth < 768 ? 50 : 100;
-    
     for (let i = 0; i < particleCount; i++) {
       this.particles.push({
         x: Math.random() * this.canvas.width,
@@ -85,24 +88,27 @@ class AnimatedBackground {
       });
     }
   }
-  
+
   bindEvents() {
-    window.addEventListener('resize', () => this.resize());
+    window.addEventListener('resize', () => {
+      this.resize();
+      this.createParticles();
+    });
     document.addEventListener('mousemove', (e) => {
       this.mouse.x = e.clientX;
       this.mouse.y = e.clientY;
     });
   }
-  
+
   resize() {
     if (!this.canvas) return;
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
   }
-  
+
   animate() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    
+
     this.particles.forEach((particle, index) => {
       // Update position
       particle.x += particle.vx;
