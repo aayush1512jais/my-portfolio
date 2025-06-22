@@ -5,10 +5,10 @@ class SplashScreenManager {
     this.navbar = document.querySelector('.navbar');
     this.hero = document.querySelector('.hero');
     this.sections = document.querySelectorAll('section');
-    
+
     this.init();
   }
-  
+
   init() {
     // Ensure splash screen is visible initially
     if (this.splashScreen) {
@@ -16,51 +16,54 @@ class SplashScreenManager {
       this.splashScreen.style.opacity = '1';
       this.splashScreen.style.visibility = 'visible';
     }
-    
+
     // Hide main content initially
     if (this.navbar) {
       this.navbar.style.opacity = '0';
       this.navbar.style.transform = 'translateY(-100%)';
     }
-    
+
     if (this.hero) {
       this.hero.style.opacity = '0';
     }
-    
+
     this.sections.forEach(section => {
       if (section.id !== 'splashScreen') {
         section.style.opacity = '0';
       }
     });
 
-    // Start the animation sequence so splash is fully gone after 2.5s
-    setTimeout(() => {
-      this.animateSplashToNavbar();
-    }, 1500); // move logo after 1.5s
+    if (this.splashScreen) {
+      // Start the animation sequence so splash is fully gone after 2.5s
+      setTimeout(() => {
+        this.animateSplashToNavbar();
+      }, 1500); // move logo after 1.5s
 
-    setTimeout(() => {
-      if (this.splashScreen) {
-        this.splashScreen.style.opacity = '0';
-      }
-    }, 2000); // start fade out at 2s
+      setTimeout(() => {
+        if (this.splashScreen) {
+          this.splashScreen.style.opacity = '0';
+        }
+      }, 2000); // start fade out at 2s
 
-    setTimeout(() => {
-      if (this.splashScreen) {
-        this.splashScreen.style.display = 'none';
+      setTimeout(() => {
+        if (this.splashScreen) {
+          this.splashScreen.style.display = 'none';
+        }
         this.showContent();
-      } else {
-        this.showContent();
-      }
-    }, 2500); // hide splash and show content at 2.5s
+      }, 2500); // hide splash and show content at 2.5s
+    } else {
+      // If splash screen is not found, show content immediately
+      this.showContent();
+    }
   }
-  
+
   animateSplashToNavbar() {
     // Add moving class to trigger logo movement animation
     if (this.splashScreen) {
       this.splashScreen.classList.add('moving');
     }
   }
-  
+
   showContent() {
     // Show navbar with animation
     if (this.navbar) {
@@ -68,22 +71,20 @@ class SplashScreenManager {
       this.navbar.style.transform = 'translateY(0)';
       this.navbar.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
     }
-    
+
     // Show hero section
-    setTimeout(() => {
-      if (this.hero) {
-        this.hero.style.opacity = '1';
-        this.hero.style.transition = 'opacity 0.8s ease-out';
-      }
-    }, 300);
-    
+    if (this.hero) {
+      this.hero.style.opacity = '1';
+      this.hero.style.transition = 'opacity 0.8s ease-out';
+    }
+
     // Show other sections with staggered animation
     this.sections.forEach((section, index) => {
       if (section.id !== 'splashScreen') {
         setTimeout(() => {
           section.style.opacity = '1';
           section.style.transition = 'opacity 0.6s ease-out';
-        }, 500 + (index * 200));
+        }, 300 + (index * 100));
       }
     });
   }
