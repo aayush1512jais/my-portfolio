@@ -25,7 +25,7 @@ jobs:
         run: npm ci
 
       - name: Build with correct base path
-        run: npm run build:deploy
+        run: npm run deploy
 
       - name: List dist contents
         run: ls -l ./dist
