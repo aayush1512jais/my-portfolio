@@ -35,8 +35,8 @@ class AnimatedBackground {
     this.ctx = null;
     this.particles = [];
     this.mouse = { x: 0, y: 0 };
-    this.initialized = false;
     this.bgContainer = null;
+    this.initialized = false;
     this._waitForContainer();
   }
 
@@ -45,12 +45,20 @@ class AnimatedBackground {
     const tryInit = () => {
       this.bgContainer = document.getElementById('animatedBg');
       if (this.bgContainer) {
-        this.init();
+        // Prevent multiple canvases
+        if (!this.bgContainer.querySelector('canvas')) {
+          this.init();
+        }
       } else {
+        // Retry after a short delay
         setTimeout(tryInit, 50);
       }
     };
-    tryInit();
+    if (document.readyState === "loading") {
+      document.addEventListener('DOMContentLoaded', tryInit, { once: true });
+    } else {
+      tryInit();
+    }
   }
 
   init() {
