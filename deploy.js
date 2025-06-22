@@ -1,6 +1,3 @@
-
-#!/usr/bin/env node
-
 const fs = require('fs');
 const path = require('path');
 
@@ -96,6 +93,9 @@ function createDeploymentGuide() {
 
 // Run the deployment preparation
 console.log('🚀 Preparing for deployment...\n');
+updatePackageJson();
+createDeploymentGuide();
+console.log('\nDeployment preparation complete! 🎉');
 updatePackageJson();
 createDeploymentGuide();
 console.log('\nDeployment preparation complete! 🎉');
