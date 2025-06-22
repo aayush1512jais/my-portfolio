@@ -32,11 +32,26 @@ class SplashScreenManager {
         section.style.opacity = '0';
       }
     });
-    
-    // Start the animation sequence after 2.5 seconds
+
+    // Start the animation sequence so splash is fully gone after 2.5s
     setTimeout(() => {
       this.animateSplashToNavbar();
-    }, 2500);
+    }, 1500); // move logo after 1.5s
+
+    setTimeout(() => {
+      if (this.splashScreen) {
+        this.splashScreen.style.opacity = '0';
+      }
+    }, 2000); // start fade out at 2s
+
+    setTimeout(() => {
+      if (this.splashScreen) {
+        this.splashScreen.style.display = 'none';
+        this.showContent();
+      } else {
+        this.showContent();
+      }
+    }, 2500); // hide splash and show content at 2.5s
   }
   
   animateSplashToNavbar() {
@@ -44,19 +59,6 @@ class SplashScreenManager {
     if (this.splashScreen) {
       this.splashScreen.classList.add('moving');
     }
-    
-    // After logo animation completes (1 second), hide splash and show content
-    setTimeout(() => {
-      if (this.splashScreen) {
-        this.splashScreen.style.opacity = '0';
-        setTimeout(() => {
-          this.splashScreen.style.display = 'none';
-          this.showContent();
-        }, 500);
-      } else {
-        this.showContent();
-      }
-    }, 1000);
   }
   
   showContent() {
