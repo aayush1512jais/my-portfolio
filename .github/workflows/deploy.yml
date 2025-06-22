@@ -30,7 +30,7 @@ jobs:
         run: npm install
 
       - name: Build for deployment
-        run: npm run build:deploy
+        run: npm run build
 
       - name: Copy scripts.js to dist
         run: cp script.js dist/script.js
