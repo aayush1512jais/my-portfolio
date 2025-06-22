@@ -168,7 +168,8 @@ class Navigation {
     this.navLinks = document.querySelectorAll('.nav-link[href^="#"]');
     this.mobileToggle = document.getElementById('mobileMenuToggle');
     this.navMenu = document.querySelector('.nav-menu');
-    
+    this.logo = document.querySelector('.nav-logo'); // Add this line
+
     this.init();
   }
   
@@ -176,6 +177,7 @@ class Navigation {
     this.bindSmoothScroll();
     this.bindMobileMenu();
     this.bindActiveLinks();
+    this.bindLogoScroll(); // Add this line
   }
   
   bindSmoothScroll() {
@@ -225,6 +227,18 @@ class Navigation {
         }
       });
     });
+  }
+
+  bindLogoScroll() {
+    if (this.logo) {
+      this.logo.addEventListener('click', (e) => {
+        e.preventDefault();
+        const heroSection = document.getElementById('home');
+        if (heroSection) {
+          heroSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
   }
 }
 
